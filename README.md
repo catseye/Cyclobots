@@ -15,18 +15,24 @@ The simplest of these is just a rotating circle, but more complex,
 [trefoil][]-like patterns are common.
 
 You can watch it online here: [Cyclobots installation at catseye.tc][].
-But note that, as of this writing, this is not the version in this
+(But note that, as of this writing, this is not the version in this
 repository; it is the version from the [HTML5 Gewgaws distribution][]).
 
 Being built on [PixiJS][], the version in this repo has the potential to
 have much nicer visuals; however, it is still a work-in-progress.
+To see it, clone this repository and open
+[demo/cyclobots.html](demo/cyclobots.html) in a web browser such as
+Firefox.
 
-To see it, check out this repository and open `demo/cyclobots.html` in a
-browser.  (It may fall back to canvas rendering if opened locally; to
-ensure that WebGL is used, you can [start a local server][].)
+(If opened as a local file, it may fall back to canvas rendering; to
+ensure that WebGL is used, you can [start a local server][], but to be
+frank it doesn't seem to make much difference at this point.)
 
 (TODO: bring this implementation up to par with the other one, and install
 this one online at catseye.tc instead.)
+
+The core behaviour is implemented in [src/cyclobots.js](src/cyclobots.js) and
+does not rely on PixiJS or any other display layer.
 
 ### History ###
 
