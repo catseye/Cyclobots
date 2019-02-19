@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Cyclobots</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  </style>
+</head>
+<body>
+
+<h1>Cyclobots</h1>
+
+<div id="wrapper" style="text-align: center">
+  <div id="container" style="display: inline-block; border: 1px solid blue">
+    <!-- view goes here -->
+  </div>
+</div>
+
+<!-- to run this offline, download this file and change this URL to point to your local copy of pixi.min.js -->
+<script src="https://catseye.tc/contrib/pixi.js-v4.8.5/pixi.min.js"></script>
+<script src="../src/cyclobots.js"></script>
+<script>
+function launch(config) {
+  var app = new PIXI.Application({ 
+    width: config.width,
+    height: config.height,
+    forceCanvas: false,
+    antialias: true,
+    backgroundColor : 0xffffff
+  });
+  config.container.appendChild(app.view);
+  var c = new Cyclobots().init({
+    width: config.width,
+    height: config.height,
+    onInitBot: function(bot) {
+      var graphics = new PIXI.Graphics();
+      graphics.lineStyle(0);
+      graphics.beginFill(0xff0000);
+      graphics.drawCircle(0, 0, 10);
+      graphics.endFill();
+      app.stage.addChild(graphics);
+      bot.graphics = graphics;
+    },
+    onUpdateBot: function(bot) {
+      bot.graphics.x = bot.x;
+      bot.graphics.y = bot.y;
+    }
+  });
+  console.log(c);
+  app.ticker.add(function(delta) {
+    c.update();
+  });
+}
+
+launch({
+  width: 800,
+  height: 600,
+  container: document.getElementById('container')
+});
+</script>
+</body>
