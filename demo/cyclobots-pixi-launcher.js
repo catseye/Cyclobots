@@ -11,7 +11,9 @@ function launch(config) {
     antialias: true,
     backgroundColor : 0xffffff
   });
+
   config.container.appendChild(app.view);
+
   var c = new Cyclobots().init({
     width: config.width,
     height: config.height,
@@ -29,10 +31,20 @@ function launch(config) {
       bot.graphics.y = bot.y;
     }
   });
+
   app.ticker.add(function(delta) {
     c.update();
   });
+
   if (config.controlPanel) {
-    // TODO: add button/slider/etc elements to control panel
+    function makeButton(container, labelText, fun) {
+      var button = document.createElement('button');
+      button.innerHTML = labelText;
+      container.appendChild(button);
+      button.onclick = fun;
+      return button;
+    }
+    makeButton(config.controlPanel, "Mass confusion!", function(e) { c.massConfusion(); });
+    makeButton(config.controlPanel, "Revolution!", function(e) { c.shuffle(); });
   }
 }
