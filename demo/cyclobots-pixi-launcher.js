@@ -36,7 +36,13 @@ function launch(config) {
     c.update();
   });
 
-  if (config.controlPanel) {
+  if (true) {
+    function makeDiv(container, innerHTML) {
+        var div = document.createElement('div');
+        div.innerHTML = innerHTML || '';
+        container.appendChild(div);
+        return div;
+    };
     function makeButton(container, labelText, fun) {
       var button = document.createElement('button');
       button.innerHTML = labelText;
@@ -44,7 +50,8 @@ function launch(config) {
       button.onclick = fun;
       return button;
     }
-    makeButton(config.controlPanel, "Mass confusion!", function(e) { c.massConfusion(); });
-    makeButton(config.controlPanel, "Revolution!", function(e) { c.shuffle(); });
+    var controlPanel = makeDiv(config.container);
+    makeButton(controlPanel, "Mass confusion!", function(e) { c.massConfusion(); });
+    makeButton(controlPanel, "Revolution!", function(e) { c.shuffle(); });
   }
 }

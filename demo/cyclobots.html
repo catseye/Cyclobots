@@ -11,13 +11,9 @@
 <h1>Cyclobots</h1>
 
 <div style="text-align: center">
-  <div id="container" style="display: inline-block; border: 1px solid blue">
+  <div id="installation" style="display: inline-block; border: 1px solid blue">
     <!-- view goes here -->
   </div>
-</div>
-
-<div style="text-align: center">
-  <div id="control-panel"></div>
 </div>
 
 <!-- to run this offline, download this file and change this URL to point to your local copy of pixi.min.js -->
@@ -26,10 +22,9 @@
 <script src="cyclobots-pixi-launcher.js"></script>
 <script>
 launch({
-  width: 800,
-  height: 600,
-  container: document.getElementById('container'),
-  controlPanel: document.getElementById('control-panel')
+  width: 640,
+  height: 480,
+  container: document.getElementById('installation'),
 });
 </script>
 </body>
