@@ -14,7 +14,7 @@ A group of cyclobots tends to fall into one of several semi-stable patterns.
 The simplest of these is just a rotating circle, but more complex,
 [trefoil][]-like patterns are common.
 
-You can watch it online here: [Cyclobots installation at catseye.tc][].
+You can watch it online here: **[Cyclobots installation at catseye.tc][]**.
 
 To run it locally, clone this repository and open
 [demo/cyclobots.html](demo/cyclobots.html) in a web browser such as
@@ -25,6 +25,9 @@ at this stage.)
 
 The core behaviour is implemented in [src/cyclobots.js](src/cyclobots.js) and
 does not rely on PixiJS or any other display layer.
+
+The PixiJS driver and visuals are defined in
+[demo/cyclobots-pixi-launcher.js](demo/cyclobots-pixi-launcher.js).
 
 ### History ###
 
