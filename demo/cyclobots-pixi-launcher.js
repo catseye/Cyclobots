@@ -114,25 +114,12 @@ function launch(config) {
     function makeVisualsPanel(container) {
       var panel = makeDiv(container);
       makeSelect(panel, "Visuals:", [
-        {
-          text: "Classic",
-          value: function() {
-            removeVisuals(c);
-            setClassicVisuals(c);
-          }
-        },
-        {
-          text: "Blurred",
-          value: function() {
-            removeVisuals(c);
-            setBlurredVisuals(c);
-          }
-        },
+        { text: "Classic", value: "1", setVisuals: setClassicVisuals },
+        { text: "Blurred", value: "2", setVisuals: setBlurredVisuals }
       ], function(selection) {
-        selection.value();
+        removeVisuals(c);
+        selection.setVisuals(c);
       });
-      makeButton(panel, "Classic", function(e) { setVisuals(c); });
-      makeButton(panel, "Remove", function(e) {  });
     }
 
     var controlPanel = makeDiv(config.container);
