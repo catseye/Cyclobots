@@ -33,7 +33,7 @@ function launch(config) {
     });
   }
 
-  function setVisuals(c) {
+  function setClassicVisuals(c) {
     c.forEachBot(function(bot) {
       if (bot.graphics) return;
       var graphics = new PIXI.Graphics();
@@ -41,13 +41,26 @@ function launch(config) {
       graphics.beginFill(0xff0000);
       graphics.drawCircle(0, 0, 10);
       graphics.endFill();
-      //graphics.filters = [new PIXI.filters.BlurFilter()];
       app.stage.addChild(graphics);
       bot.graphics = graphics;
     });
   }
 
-  setVisuals(c);
+  function setBlurredVisuals(c) {
+    c.forEachBot(function(bot) {
+      if (bot.graphics) return;
+      var graphics = new PIXI.Graphics();
+      graphics.lineStyle(0);
+      graphics.beginFill(0xff0000);
+      graphics.drawCircle(0, 0, 10);
+      graphics.endFill();
+      graphics.filters = [new PIXI.filters.BlurFilter()];
+      app.stage.addChild(graphics);
+      bot.graphics = graphics;
+    });
+  }
+
+  setClassicVisuals(c);
 
   app.ticker.add(function(delta) {
     c.update();
@@ -67,19 +80,19 @@ function launch(config) {
       button.onclick = fun;
       return button;
     }
-    function makeSelect(container, labelText, optionsArray, fun, def) {
+    function makeSelect(container, labelText, optionsArray, fun) {
       var label = document.createElement('label');
       label.innerHTML = labelText;
       container.appendChild(label);
       var select = document.createElement("select");
       for (var i = 0; i < optionsArray.length; i++) {
         var op = document.createElement("option");
-        op.value = optionsArray[i][0];
-        op.text = optionsArray[i][1];
+        op.value = optionsArray[i].value;
+        op.text = optionsArray[i].text;
         select.options.add(op);
       }
       select.onchange = function(e) {
-        fun(optionsArray[select.selectedIndex][0]);
+        fun(optionsArray[select.selectedIndex]);
       };
       select.selectedIndex = 0;
       label.appendChild(select);
@@ -100,8 +113,26 @@ function launch(config) {
     }
     function makeVisualsPanel(container) {
       var panel = makeDiv(container);
+      makeSelect(panel, "Visuals:", [
+        {
+          text: "Classic",
+          value: function() {
+            removeVisuals(c);
+            setClassicVisuals(c);
+          }
+        },
+        {
+          text: "Blurred",
+          value: function() {
+            removeVisuals(c);
+            setBlurredVisuals(c);
+          }
+        },
+      ], function(selection) {
+        selection.value();
+      });
       makeButton(panel, "Classic", function(e) { setVisuals(c); });
-      makeButton(panel, "Remove", function(e) { removeVisuals(c); });
+      makeButton(panel, "Remove", function(e) {  });
     }
 
     var controlPanel = makeDiv(config.container);
