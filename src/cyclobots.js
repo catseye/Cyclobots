@@ -70,6 +70,12 @@ Cyclobots = function() {
         return this;
     };
 
+    this.forEachBot = function(callback) {
+        for (var i = 0; i < this.bots.length; i++) {
+            callback(this.bots[i]);
+        }
+    };
+
     this.linkUpBots = function() {
         var numBots = this.bots.length;
         for (var i = 0; i < numBots - 1; i++) {
@@ -79,18 +85,18 @@ Cyclobots = function() {
     };
 
     this.update = function() {
-        for (var i = 0; i < this.bots.length; i++) {
-            var bot = this.bots[i];
+        var $this = this;
+        this.forEachBot(function(bot) {
             bot.move();
             bot.adjust();
-            if (this.onUpdateBot) this.onUpdateBot(bot);
-        }
+            if ($this.onUpdateBot) $this.onUpdateBot(bot);
+        });
     };
 
     this.massConfusion = function() {
-        for (var i = 0; i < this.bots.length; i++) {
-            this.bots[i].theta = Math.random() * TWO_PI;
-        }
+        this.forEachBot(function(bot) {
+            bot.theta = Math.random() * TWO_PI;
+        });
     };
 
     this.shuffle = function() {
