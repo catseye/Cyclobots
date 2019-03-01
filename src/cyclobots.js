@@ -9,9 +9,6 @@ Cyclobot = function() {
         this.speed = config.speed;
         this.dexterity = config.dexterity;  // radians
         this.next = config.next;
-        if (config.onInitBot) {
-            config.onInitBot(this);
-        }
         return this;
     };
 
@@ -61,8 +58,7 @@ Cyclobots = function() {
                 y: 50 + Math.random() * (config.height - 100),
                 theta: Math.random() * TWO_PI,
                 speed: 2,
-                dexterity: 2 * RADIANS_PER_DEGREE,
-                onInitBot: config.onInitBot
+                dexterity: 2 * RADIANS_PER_DEGREE
             });
             this.bots.push(bot);
         }

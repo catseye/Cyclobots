@@ -17,7 +17,25 @@ function launch(config) {
   var c = new Cyclobots().init({
     width: config.width,
     height: config.height,
-    onInitBot: function(bot) {
+    onUpdateBot: function(bot) {
+      if (!bot.graphics) return;
+      bot.graphics.x = bot.x;
+      bot.graphics.y = bot.y;
+    }
+  });
+
+  function removeVisuals(c) {
+    c.forEachBot(function(bot) {
+      if (bot.graphics) {
+        bot.graphics.destroy();
+      }
+      bot.graphics = undefined;
+    });
+  }
+
+  function setVisuals(c) {
+    c.forEachBot(function(bot) {
+      if (bot.graphics) return;
       var graphics = new PIXI.Graphics();
       graphics.lineStyle(0);
       graphics.beginFill(0xff0000);
@@ -26,12 +44,10 @@ function launch(config) {
       //graphics.filters = [new PIXI.filters.BlurFilter()];
       app.stage.addChild(graphics);
       bot.graphics = graphics;
-    },
-    onUpdateBot: function(bot) {
-      bot.graphics.x = bot.x;
-      bot.graphics.y = bot.y;
-    }
-  });
+    });
+  }
+
+  setVisuals(c);
 
   app.ticker.add(function(delta) {
     c.update();
@@ -82,9 +98,15 @@ function launch(config) {
         panel.innerHTML += ' <a href="?forceCanvas=1">Force Canvas renderer</a>.';
       }
     }
+    function makeVisualsPanel(container) {
+      var panel = makeDiv(container);
+      makeButton(panel, "Classic", function(e) { setVisuals(c); });
+      makeButton(panel, "Remove", function(e) { removeVisuals(c); });
+    }
 
     var controlPanel = makeDiv(config.container);
     var rendererPanel = makeRendererPanel(controlPanel);
+    var visualsPanel = makeVisualsPanel(controlPanel);
     makeButton(controlPanel, "Mass confusion!", function(e) { c.massConfusion(); });
     makeButton(controlPanel, "Revolution!", function(e) { c.shuffle(); });
   }
