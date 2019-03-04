@@ -1,5 +1,5 @@
 /*
- * pixi-min.js and cyclobots.js must be loaded before this source.
+ * pixi-min.js, pixi-viewport.js, and cyclobots.js must be loaded before this source.
  * After loading this source, call launch() to create and start the gewgaw.
  */
 
@@ -13,6 +13,18 @@ function launch(config) {
   });
 
   config.container.appendChild(app.view);
+
+  var viewport = new PIXI.extras.Viewport({
+      screenWidth: config.width,
+      screenHeight: config.height,
+      worldWidth: 1000,
+      worldHeight: 1000,
+      interaction: app.renderer.plugins.interaction
+  });
+  console.log(viewport);
+
+  app.stage.addChild(viewport);
+  viewport.drag();
 
   var c = new Cyclobots().init({
     width: config.width,
@@ -41,7 +53,7 @@ function launch(config) {
       graphics.beginFill(0xff0000);
       graphics.drawCircle(0, 0, 10);
       graphics.endFill();
-      app.stage.addChild(graphics);
+      viewport.addChild(graphics);
       bot.graphics = graphics;
     });
   }
@@ -55,7 +67,7 @@ function launch(config) {
       graphics.drawCircle(0, 0, 10);
       graphics.endFill();
       graphics.filters = [new PIXI.filters.BlurFilter()];
-      app.stage.addChild(graphics);
+      viewport.addChild(graphics);
       bot.graphics = graphics;
     });
   }
