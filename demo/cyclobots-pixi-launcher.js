@@ -10,6 +10,13 @@ function makeDiv(container, innerHTML) {
   return div;
 }
 
+function makeSpan(container, innerHTML) {
+  var span = document.createElement('span');
+  span.innerHTML = innerHTML || '';
+  container.appendChild(span);
+  return span;
+}
+
 function makeButton(container, labelText, fun) {
   var button = document.createElement('button');
   button.innerHTML = labelText;
@@ -131,23 +138,28 @@ function launch(config) {
   var controlPanel = makeDiv(config.container);
 
   /*----- renderer panel -----*/
-  var panel = makeDiv(controlPanel);
+  var rendererPanel = makeDiv(controlPanel);
+  var rendererSpan = makeSpan(rendererPanel);
   var renderer = getRenderer(app);
-  panel.innerHTML = "Renderer: " + renderer + ".";
+  rendererSpan.innerHTML = "Renderer: " + renderer + ".";
   if (renderer !== "Canvas") {
-    makeButton(panel, "Force canvas renderer", function(e) {
+    var forceCanvasButton;
+    forceCanvasButton = makeButton(rendererPanel, "Force Canvas renderer", function(e) {
       removeVisuals(cyclobots);
       app.destroy(true, true);
+      config.forceCanvas = true;
       r = setUpPixiApp(config, cyclobots);
       app = r.app;
       viewport = r.viewport;
       setClassicVisuals(cyclobots, viewport);
+      forceCanvasButton.remove();
+      rendererSpan.innerHTML = "Renderer: Canvas.";
     });
   }
 
   /*----- visuals panel -----*/
-  var panel = makeDiv(controlPanel);
-  makeSelect(panel, "Visuals:", [
+  var visualsPanel = makeDiv(controlPanel);
+  makeSelect(visualsPanel, "Visuals:", [
     { text: "Classic", value: "1", setVisuals: setClassicVisuals },
     { text: "Blurred", value: "2", setVisuals: setBlurredVisuals }
   ], function(selection) {
