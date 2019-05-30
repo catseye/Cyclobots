@@ -1,48 +1,7 @@
 /*
- * pixi-min.js, pixi-viewport.js, and cyclobots.js must be loaded before this source.
+ * dam.js, dam-widgets.js, pixi-min.js, pixi-viewport.js, and cyclobots.js must be loaded before this source.
  * After loading this source, call launch() to create and start the gewgaw.
  */
-
-function makeDiv(container, innerHTML) {
-  var div = document.createElement('div');
-  div.innerHTML = innerHTML || '';
-  container.appendChild(div);
-  return div;
-}
-
-function makeSpan(container, innerHTML) {
-  var span = document.createElement('span');
-  span.innerHTML = innerHTML || '';
-  container.appendChild(span);
-  return span;
-}
-
-function makeButton(container, labelText, fun) {
-  var button = document.createElement('button');
-  button.innerHTML = labelText;
-  container.appendChild(button);
-  button.onclick = fun;
-  return button;
-}
-
-function makeSelect(container, labelText, optionsArray, fun) {
-  var label = document.createElement('label');
-  label.innerHTML = labelText;
-  container.appendChild(label);
-  var select = document.createElement("select");
-  for (var i = 0; i < optionsArray.length; i++) {
-    var op = document.createElement("option");
-    op.value = optionsArray[i].value;
-    op.text = optionsArray[i].text;
-    select.options.add(op);
-  }
-  select.onchange = function(e) {
-    fun(optionsArray[select.selectedIndex]);
-  };
-  select.selectedIndex = 0;
-  label.appendChild(select);
-  return select;
-};
 
 function removeVisuals(cyclobots) {
   cyclobots.forEachBot(function(bot) {
@@ -135,38 +94,56 @@ function launch(config) {
 
   setClassicVisuals(cyclobots, viewport);
 
-  var controlPanel = makeDiv(config.container);
+  var div=DAM.maker('div'), button=DAM.maker('button'), span=DAM.maker('span');
 
   /*----- renderer panel -----*/
-  var rendererPanel = makeDiv(controlPanel);
-  var rendererSpan = makeSpan(rendererPanel);
   var renderer = getRenderer(app);
-  rendererSpan.innerHTML = "Renderer: " + renderer + ".";
+  var rendererSpan = span("Renderer: " + renderer + ".");
+  var forceRendererButton = null;
   if (renderer !== "Canvas") {
-    var forceCanvasButton;
-    forceCanvasButton = makeButton(rendererPanel, "Force Canvas renderer", function(e) {
-      removeVisuals(cyclobots);
-      app.destroy(true, true);
-      config.forceCanvas = true;
-      r = setUpPixiApp(config, cyclobots);
-      app = r.app;
-      viewport = r.viewport;
-      setClassicVisuals(cyclobots, viewport);
-      forceCanvasButton.remove();
-      rendererSpan.innerHTML = "Renderer: Canvas.";
-    });
+    forceRendererButton = button(
+      "Force Canvas renderer",
+      {
+        onclick: function(e) {
+          removeVisuals(cyclobots);
+          app.destroy(true, true);
+          config.forceCanvas = true;
+          r = setUpPixiApp(config, cyclobots);
+          app = r.app;
+          viewport = r.viewport;
+          setClassicVisuals(cyclobots, app.stage);
+          forceRendererButton.remove();
+          rendererSpan.innerHTML = "Renderer: Canvas.";
+        }
+      }
+    );
   }
+  var rendererPanel = div(
+    rendererSpan,
+    forceRendererButton
+  );
 
   /*----- visuals panel -----*/
-  var visualsPanel = makeDiv(controlPanel);
-  makeSelect(visualsPanel, "Visuals:", [
-    { text: "Classic", value: "1", setVisuals: setClassicVisuals },
-    { text: "Blurred", value: "2", setVisuals: setBlurredVisuals }
-  ], function(selection) {
-    removeVisuals(cyclobots);
-    selection.setVisuals(cyclobots, viewport);
-  });
+  var visualsPanel = div(
+    DAM.makeSelect(
+      {
+        title: "Visuals:",
+        options: [
+          { text: "Classic", value: "1", setVisuals: setClassicVisuals },
+          { text: "Blurred", value: "2", setVisuals: setBlurredVisuals }
+        ],
+        onchange: function(option) {
+          removeVisuals(cyclobots);
+          option.setVisuals(cyclobots, viewport);
+        }
+      }
+    )
+  );
 
-  makeButton(controlPanel, "Mass confusion!", function(e) { cyclobots.massConfusion(); });
-  makeButton(controlPanel, "Revolution!", function(e) { cyclobots.shuffle(); });
+  var actionsPanel = div(
+    button("Mass confusion!", { onclick: function(e) { cyclobots.massConfusion(); } }),
+    button("Revolution!", { onclick: function(e) { cyclobots.shuffle(); } })
+  );
+
+  config.container.appendChild(div(rendererPanel, visualsPanel, actionsPanel));
 }
