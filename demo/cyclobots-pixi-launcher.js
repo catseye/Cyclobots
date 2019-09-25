@@ -1,5 +1,5 @@
 /*
- * dam.js, dam-widgets.js, pixi-min.js, pixi-viewport.js, and cyclobots.js must be loaded before this source.
+ * dam-plus-widgets-web.js, pixi-min.js, pixi-viewport.js, and cyclobots.js must be loaded before this source.
  * After loading this source, call launch() to create and start the gewgaw.
  */
 
