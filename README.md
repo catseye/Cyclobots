@@ -1,6 +1,10 @@
 Cyclobots
 =========
 
+_Try it online_ [@ catseye.tc](https://catseye.tc/installation/Cyclobots)
+| _See also:_ [Chzrxl](https://github.com/catseye/Chzrxl#readme)
+∘ [noit o' mnain worb](https://github.com/catseye/noit-o-mnain-worb#readme)
+
 ![screenshot](https://static.catseye.tc/images/screenshots/Cyclobots.jpg)
 
 This is the reference distribution for **Cyclobots**, a dynamical system
