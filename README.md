@@ -36,8 +36,8 @@ The PixiJS driver and visuals are defined in
 ### History ###
 
 The first implementation of Cyclobots, now lost, was in Visual Basic 3.0, in
-1994.  Some things it supported that subsequent implementations haven't
-yet replicated include:
+1994.  (Let's call it version 1.0.)  Some things it supported that subsequent
+implementations haven't yet replicated include:
 
 *   the cyclobots would collide with each other; a cyclobot would be unable
     to pass through another cyclobot.
@@ -45,13 +45,13 @@ yet replicated include:
     all the cyclobots towards (or away from) that point instead of each other.
 
 In 2013, Cyclobots was [re-implemented in Javascript][], and this implementation
-can be found in the [HTML5 Gewgaws distribution][].
+resided in the [HTML5 Gewgaws distribution][].  (Let's call this one version 2.0).
 
 In 2019, this Javascript implementation was cleaned up and re-fitted to use
-[PixiJS][], and that is the version in this repository.  Since PixiJS uses
-WebGL when possible, this version has the potential to have much nicer visuals
-than the previous versions; however, it is still a work-in-progress in this
-regard.
+[PixiJS][], and that is the version in this repository (which we will call
+version 2.1 or greater).  Since PixiJS uses WebGL when possible, this version
+has the potential to have much nicer visuals than the previous versions;
+however, it is still a work-in-progress in this regard.
 
 [trefoil]: https://en.wikipedia.org/wiki/Trefoil_knot
 [Cyclobots installation at catseye.tc]: https://catseye.tc/installation/Cyclobots
