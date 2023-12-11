@@ -2,8 +2,8 @@ Cyclobots
 =========
 
 _Try it online_ [@ catseye.tc](https://catseye.tc/installation/Cyclobots)
-| _See also:_ [Chzrxl](https://github.com/catseye/Chzrxl#readme)
-∘ [noit o' mnain worb](https://github.com/catseye/noit-o-mnain-worb#readme)
+| _See also:_ [Chzrxl](https://codeberg.org/catseye/Chzrxl#chzrxl)
+∘ [noit o' mnain worb](https://codeberg.org/catseye/noit-o-mnain-worb#noit-o-mnain-worb)
 
 ![screenshot](https://static.catseye.tc/images/screenshots/Cyclobots.jpg)
 
@@ -57,5 +57,5 @@ however, it is still a work-in-progress in this regard.
 [Cyclobots installation at catseye.tc]: https://catseye.tc/installation/Cyclobots
 [HTML5 Gewgaws distribution]: https://catseye.tc/distribution/HTML5%20Gewgaws%20distribution
 [PixiJS]: http://www.pixijs.com/
-[start a local server]: https://github.com/mrdoob/three.js/wiki/How-to-run-things-locally#run-local-server
+[start a local server]: https://web.archive.org/web/20190117102459/https://github.com/mrdoob/three.js/wiki/How-to-run-things-locally#run-local-server
 [re-implemented in Javascript]: https://catseye.tc/article/News.md#id-been-meaning-to-re-implement-this-for-ages
